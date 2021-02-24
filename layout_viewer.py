@@ -49,11 +49,14 @@ if __name__ == '__main__':
     if not args.ignore_wireframe:
         # Convert cor_id to 3d xyz
         N = len(cor_id) // 2
-        floor_z = -1.6
+        floor_z = -1.6 # floor Z coord
+        
+        # floor xy coord
         floor_xy = np_coor2xy(cor_id[1::2], floor_z, W, H, floorW=1, floorH=1)
         c = np.sqrt((floor_xy**2).sum(1))
         v = np_coory2v(cor_id[0::2, 1], H)
-        ceil_z = (c * np.tan(v)).mean()
+        
+        ceil_z = (c * np.tan(v)).mean() # ceil Z coord
 
         # Prepare wireframe in open3d
         assert N == len(floor_xy)
