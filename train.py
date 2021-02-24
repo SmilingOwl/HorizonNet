@@ -34,6 +34,7 @@ def feed_forward(net, x, y_bon, y_cor):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    
     parser.add_argument('--id', required=True,
                         help='experiment id to name checkpoints and logs')
     parser.add_argument('--ckpt', default='./ckpt',
@@ -43,12 +44,14 @@ if __name__ == '__main__':
     parser.add_argument('--pth', default=None,
                         help='path to load saved checkpoint.'
                              '(finetuning)')
+    
     # Model related
     parser.add_argument('--backbone', default='resnet50',
                         choices=ENCODER_RESNET + ENCODER_DENSENET,
                         help='backbone of the network')
     parser.add_argument('--no_rnn', action='store_true',
                         help='whether to remove rnn or not')
+    
     # Dataset related arguments
     parser.add_argument('--train_root_dir', default='data/layoutnet_dataset/train',
                         help='root directory to training dataset. '
@@ -66,6 +69,7 @@ if __name__ == '__main__':
                         help='disable pano stretch')
     parser.add_argument('--num_workers', default=6, type=int,
                         help='numbers of workers for dataloaders')
+    
     # optimization related arguments
     parser.add_argument('--freeze_earlier_blocks', default=-1, type=int)
     parser.add_argument('--batch_size_train', default=4, type=int,
@@ -89,6 +93,7 @@ if __name__ == '__main__':
     parser.add_argument('--weight_decay', default=0, type=float,
                         help='factor for L2 regularization')
     parser.add_argument('--bn_momentum', type=float)
+    
     # Misc arguments
     parser.add_argument('--no_cuda', action='store_true',
                         help='disable cuda')
@@ -247,7 +252,7 @@ if __name__ == '__main__':
                            os.path.join(args.ckpt, args.id, 'best_valid.pth'),
                            args)
 
-        # Periodically save model
+        # Periodically save model (default: 25 in 25)
         if ith_epoch % args.save_every == 0:
             save_model(net,
                        os.path.join(args.ckpt, args.id, 'epoch_%d.pth' % ith_epoch),
