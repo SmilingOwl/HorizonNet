@@ -1,7 +1,5 @@
 # For this project
-data
 logs
-ckpt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
