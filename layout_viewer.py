@@ -57,7 +57,11 @@ if __name__ == '__main__':
         v = np_coory2v(cor_id[0::2, 1], H)
         
         ceil_z = (c * np.tan(v)).mean() # ceil Z coord
-
+        
+        print("floor coord = " + floor_z + "\n")
+        print("ceil coord = " + ceil_z  + "\n")
+        print("points = " + floor_xy  + "\n")
+        
         # Prepare wireframe in open3d
         assert N == len(floor_xy)
         wf_points = [[x, y, floor_z] for x, y in floor_xy] +\
