@@ -1,9 +1,11 @@
 import json
 import open3d
 import numpy as np
+from numpy import ndarray
 from PIL import Image
 from tqdm import tqdm, trange
 from scipy.ndimage import map_coordinates
+import json
 
 from misc.post_proc import np_coor2xy, np_coorx2u, np_coory2v
 from misc.panostretch import pano_connect_points
@@ -58,10 +60,61 @@ if __name__ == '__main__':
         
         ceil_z = (c * np.tan(v)).mean() # ceil Z coord
         
-        print("floor coord = " + floor_z + "\n")
-        print("ceil coord = " + ceil_z  + "\n")
-        print("points = " + floor_xy  + "\n")
+        floor_values= []
+        for i in range(2):
+            floor_values.append([row[i] for row in floor_xy])
         
+        floor_x = floor_values[0]
+        floor_y = floor_values[1]
+
+        dimension_x = max(floor_x, key=abs)
+        dimension_y = max([ceil_z,floor_z], key=abs)
+        dimension_z = max(floor_y, key=abs)
+        
+        # Data to be written 
+        # dimensions
+        dictionary = { 
+        "dimensions": {
+                "x": str(dimension_x),
+                "y": str(dimension_y),
+                "z": str(dimension_z),
+            }
+        } 
+
+        # walls
+        assert N == len(floor_xy)
+        wall = [dict() for x in range(N)]
+        
+        for i in range(N):
+            if i == (N-1):
+                wall[i]= { "from": {"x": str(floor_xy[i][0]), "z": str(floor_xy[i][1])},
+                            "to": {"x": str(floor_xy[0][0]), "z": str(floor_xy[0][1])},
+                            "height": str(ceil_z)}
+            else:
+                wall[i]= { "from": {"x": str(floor_xy[i][0]), "z": str(floor_xy[i][1])},
+                            "to": {"x": str(floor_xy[i+1][0]), "z": str(floor_xy[i+1][1])},
+                            "height": str(ceil_z)}
+        
+        # floor
+        dict_floor = {
+                "from": {"x":  str(floor_xy[0][0]), "z":  str(floor_xy[0][0])},
+                "to": {"x":  str(floor_xy[2][0]), "z":  str(floor_xy[2][0])}
+        }
+
+        # Append all parts
+        dictionary["walls"] = wall
+        obj = []
+        floor = [dict_floor]
+        dictionary["floor"] = floor
+        dictionary["objects"] = obj
+        
+        # Serializing json  
+        json_object = json.dumps(dictionary, indent = 4) 
+  
+        # Writing to layout.json 
+        with open("layout.json", "w") as outfile: 
+            outfile.write(json_object) 
+
         # Prepare wireframe in open3d
         assert N == len(floor_xy)
         wf_points = [[x, y, floor_z] for x, y in floor_xy] +\
