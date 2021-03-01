@@ -57,7 +57,7 @@ if __name__ == '__main__':
         floor_xy = np_coor2xy(cor_id[1::2], floor_z, W, H, floorW=1, floorH=1)
         c = np.sqrt((floor_xy**2).sum(1))
         v = np_coory2v(cor_id[0::2, 1], H)
-        
+        print(floor_xy)
         ceil_z = (c * np.tan(v)).mean() # ceil Z coord
         
         floor_values= []
@@ -96,17 +96,16 @@ if __name__ == '__main__':
                             "height": str(ceil_z)}
         
         # floor
-        dict_floor = {
-                {"x":  str(floor_xy[0][0]), "z":  str(floor_xy[0][1])},
-                {"x":  str(floor_xy[1][0]), "z":  str(floor_xy[1][1])},
-                {"x":  str(floor_xy[2][0]), "z":  str(floor_xy[1][1])}
-                {"x":  str(floor_xy[1][0]), "z":  str(floor_xy[1][1])}
-        }
+        floor =[dict() for x in range(N)]
+        
+        floor[0] = {"x":  str(floor_xy[0][0]), "z":  str(floor_xy[0][1])}
+        floor[1] = {"x":  str(floor_xy[1][0]), "z":  str(floor_xy[1][1])}
+        floor[2] = {"x":  str(floor_xy[2][0]), "z":  str(floor_xy[1][1])}
+        floor[3] = {"x":  str(floor_xy[1][0]), "z":  str(floor_xy[1][1])}
 
         # Append all parts
         dictionary["walls"] = wall
         obj = []
-        floor = [dict_floor]
         dictionary["floor"] = floor
         dictionary["objects"] = obj
         
