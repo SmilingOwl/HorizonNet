@@ -97,8 +97,10 @@ if __name__ == '__main__':
         
         # floor
         dict_floor = {
-                "from": {"x":  str(floor_xy[0][0]), "z":  str(floor_xy[0][0])},
-                "to": {"x":  str(floor_xy[2][0]), "z":  str(floor_xy[2][0])}
+                {"x":  str(floor_xy[0][0]), "z":  str(floor_xy[0][1])},
+                {"x":  str(floor_xy[1][0]), "z":  str(floor_xy[1][1])},
+                {"x":  str(floor_xy[2][0]), "z":  str(floor_xy[1][1])}
+                {"x":  str(floor_xy[1][0]), "z":  str(floor_xy[1][1])}
         }
 
         # Append all parts
