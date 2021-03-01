@@ -100,8 +100,8 @@ if __name__ == '__main__':
         
         floor[0] = {"x":  str(floor_xy[0][0]), "z":  str(floor_xy[0][1])}
         floor[1] = {"x":  str(floor_xy[1][0]), "z":  str(floor_xy[1][1])}
-        floor[2] = {"x":  str(floor_xy[2][0]), "z":  str(floor_xy[1][1])}
-        floor[3] = {"x":  str(floor_xy[1][0]), "z":  str(floor_xy[1][1])}
+        floor[2] = {"x":  str(floor_xy[2][0]), "z":  str(floor_xy[2][1])}
+        floor[3] = {"x":  str(floor_xy[3][0]), "z":  str(floor_xy[3][1])}
 
         # Append all parts
         dictionary["walls"] = wall
