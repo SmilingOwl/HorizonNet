@@ -34,7 +34,7 @@ function init() {
     // load data geometry
     $.ajax({
         type: "Get",
-        url: "data/example.json",
+        url: "data/layout.json",
         dataType: "json",
         success: function(data) {
             sceneRawData = data;

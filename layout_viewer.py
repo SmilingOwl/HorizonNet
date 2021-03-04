@@ -111,7 +111,8 @@ if __name__ == '__main__':
         json_object = json.dumps(dictionary, indent = 4) 
   
         # Writing to layout.json 
-        with open("layout.json", "w") as outfile: 
+        outFileName="C:/Users/jm-marques/Desktop/HorizonNet/visual-demo/data/layout.json"
+        with open(outFileName, "w") as outfile: 
             outfile.write(json_object) 
 
         # Prepare wireframe in open3d
